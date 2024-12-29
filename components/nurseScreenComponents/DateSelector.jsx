@@ -1,5 +1,4 @@
-import React from 'react';
-import { Text, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
+import { ScrollView, StyleSheet, TouchableOpacity, Text, View } from 'react-native';
 
 const DateItem = ({ day, weekday, isSelected, onSelect }) => (
     <TouchableOpacity
@@ -20,48 +19,55 @@ export default function DateSelector() {
     const [dates, setDates] = React.useState([]);
 
     React.useEffect(() => {
-        // Generate the next 7 days starting from today
         const today = new Date();
         const generatedDates = Array.from({ length: 7 }, (_, index) => {
             const date = new Date(today);
-            date.setDate(today.getDate() + index);
+            date.setDate(today.getDate() + index - 3); // Center the current date
             const day = date.getDate();
             const weekday = date.toLocaleDateString('en-US', { weekday: 'short' }).toUpperCase();
             return { day, weekday };
         });
         setDates(generatedDates);
+        setSelectedDate(today.getDate()); // Select today's date by default
     }, []);
 
     return (
-        <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            style={styles.container}
-        >
-            {dates.map((date, index) => (
-                <DateItem
-                    key={index}
-                    day={date.day}
-                    weekday={date.weekday}
-                    isSelected={selectedDate === date.day}
-                    onSelect={() => setSelectedDate(date.day)}
-                />
-            ))}
-        </ScrollView>
+        <View style={styles.wrapper}>
+            <ScrollView
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={styles.container}
+            >
+                {dates.map((date, index) => (
+                    <DateItem
+                        key={index}
+                        day={date.day}
+                        weekday={date.weekday}
+                        isSelected={selectedDate === date.day}
+                        onSelect={() => setSelectedDate(date.day)}
+                    />
+                ))}
+            </ScrollView>
+        </View>
     );
-};
+}
 
 const styles = StyleSheet.create({
+    wrapper: {
+        marginVertical: 20, 
+        paddingVertical: 5, 
+   },
     container: {
-        marginVertical: 10,
+        flexGrow: 0,
+        marginVertical: 5, 
     },
     dateItem: {
-        width: 50,
-        height: 70,
-        justifyContent: 'center',
         alignItems: 'center',
+        padding: 10,
+        justifyContent: 'center',
         marginHorizontal: 5,
-        borderRadius: 25,
+        borderRadius: 15,
+        width: 60,
     },
     selectedDate: {
         backgroundColor: '#006400',
@@ -79,4 +85,4 @@ const styles = StyleSheet.create({
     selectedText: {
         color: '#fff',
     },
-});
+});                                                                                                                                                                                                                                             import React from 'react';
