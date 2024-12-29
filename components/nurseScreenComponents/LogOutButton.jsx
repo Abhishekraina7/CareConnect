@@ -5,8 +5,8 @@ import { router } from 'expo-router';
 
 export default function LogoutButton() {
     const handleLogout = () => {
-        router.push('/(screens)/signScreen'); // Replace with your Sign In screen path
-        console.log('Logged out and navigating to Sign In screen');
+        router.push("/(screens)/NursesignScreen"); // Replace with your Sign In screen path
+        console.log('Logged out is Pressed');
     }; 
 
     return (
