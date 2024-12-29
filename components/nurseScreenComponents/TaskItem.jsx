@@ -1,36 +1,33 @@
-import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { Swipeable } from 'react-native-gesture-handler';
 
+export default function TaskItem({ room, bed, request, isUrgent = false, onRightSwipe }) {
+    const renderRightActions = () => (
+        <View style={styles.deleteContainer}>
+            <Text style={styles.deleteText}>Complete</Text>
+        </View>
+    );
 
-export default function TaskItem({ room, bed, request, isUrgent = false }) {
     return (
-        <View style={styles.container}>
-            <View style={[styles.taskContent, isUrgent && styles.urgentTask]}>
+        <Swipeable
+            renderRightActions={renderRightActions}
+            onSwipeableRightOpen={onRightSwipe} // Trigger when swiped
+        >
+            <View style={[styles.container, isUrgent && styles.urgentTask]}>
                 <Text style={styles.locationText}>{room}, {bed}</Text>
                 <Text style={styles.requestText}>{request}</Text>
             </View>
-        </View>
+        </Swipeable>
     );
-};
+}
 
 const styles = StyleSheet.create({
     container: {
-        flexDirection: 'row',
-        alignItems: 'flex-start',
-        marginVertical: 10,
-        paddingHorizontal: 20,
-    },
-    timeText: {
-        width: 50,
-        fontSize: 14,
-        color: '#666',
-        marginRight: 10,
-    },
-    taskContent: {
         flex: 1,
         backgroundColor: '#E8F5E9',
         padding: 15,
         borderRadius: 10,
+        marginVertical: 10,
     },
     urgentTask: {
         backgroundColor: '#FFCDD2',
@@ -45,5 +42,15 @@ const styles = StyleSheet.create({
         color: '#666',
         marginTop: 4,
     },
-});
-
+    deleteContainer: {
+        backgroundColor: '#FF6347',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: 80,
+        borderRadius: 10,
+    },
+    deleteText: {
+        color: '#fff',
+        fontWeight: 'bold',
+    },
+});                                                                                                                                                                                                                                                            import React from 'react';

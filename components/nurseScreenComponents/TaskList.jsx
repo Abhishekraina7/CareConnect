@@ -1,49 +1,32 @@
 import React from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
+import { ScrollView, StyleSheet, Text } from 'react-native';
 import TaskItem from './TaskItem';
 
-export default function TaskList() {
-    const tasks = [
-        {
-            room: 'Room 203',
-            bed: 'Bed-8',
-            request: 'Requested water',
-            isUrgent: false,
-        },
-
-        {
-            room: 'Room 203',
-            bed: 'Bed-8',
-            request: 'Requested water',
-            isUrgent: false,
-        },
-        {
-
-            room: 'Room 107',
-            bed: 'Bed-17',
-            request: 'Requested bandages',
-            isUrgent: false,
-        },
-        {
-            room: 'Room 106',
-            bed: 'Bed-23',
-            request: 'chest pain check-up',
-            isUrgent: true,
-        },
-    ];
-
+export default function TaskList({ tasks = [], onTaskComplete }) {
     return (
         <ScrollView style={styles.container}>
-            {tasks.map((task, index) => (
-                <TaskItem key={index} {...task} />
-            ))}
+            {tasks.length > 0 ? (
+                tasks.map((task, index) => (
+                    <TaskItem
+                        key={index}
+                        {...task}
+                        onRightSwipe={() => onTaskComplete(task)}
+                    />
+                ))
+            ) : (
+                <Text style={styles.emptyText}>No tasks available</Text>
+            )}
         </ScrollView>
     );
-};
+}
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
     },
+    emptyText: {
+        textAlign: 'center',
+        marginTop: 20,
+        color: '#888',
+    },
 });
-
